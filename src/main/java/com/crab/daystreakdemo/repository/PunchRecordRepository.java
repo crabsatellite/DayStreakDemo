@@ -15,4 +15,6 @@ public interface PunchRecordRepository extends JpaRepository<PunchRecord, Long> 
 
     // find all punch records by uid
     List<PunchRecord> findByUser_Uid(Long uid);
+
+    List<PunchRecord> findByUser_UidOrderByPunchTimeAsc(Long uid);
 }

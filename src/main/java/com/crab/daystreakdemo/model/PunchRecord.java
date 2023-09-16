@@ -32,5 +32,9 @@ public class PunchRecord {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public LocalDateTime getPunchTime() {
+        return punchTime;
+    }
 }
 
