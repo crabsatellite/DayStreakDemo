@@ -3,7 +3,6 @@ package com.crab.daystreakdemo.service;
 import com.crab.daystreakdemo.model.PunchRecord;
 import com.crab.daystreakdemo.model.PunchType;
 import com.crab.daystreakdemo.repository.PunchRecordRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,9 +10,10 @@ import java.util.List;
 
 @Service
 public class PunchRecordService {
-
-    @Autowired
-    private PunchRecordRepository repository;
+    private final PunchRecordRepository repository;
+    public PunchRecordService(PunchRecordRepository repository) {
+        this.repository = repository;
+    }
 
     public PunchRecord checkIn() {
         PunchRecord lastRecord = repository.findTopByOrderByPunchTimeDesc();

@@ -14,9 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/punch")
 public class PunchRecordController {
-
-    @Autowired
-    private PunchRecordService service;
+    private final PunchRecordService service;
+    public PunchRecordController(PunchRecordService service) {
+        this.service = service;
+    }
 
     @PostMapping("/in")
     public PunchRecord checkIn() {
