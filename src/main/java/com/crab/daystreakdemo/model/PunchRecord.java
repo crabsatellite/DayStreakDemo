@@ -28,5 +28,9 @@ public class PunchRecord {
     public PunchType getType() {
         return punchType;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
 

@@ -2,11 +2,13 @@ package com.crab.daystreakdemo.service;
 
 import com.crab.daystreakdemo.model.PunchRecord;
 import com.crab.daystreakdemo.model.PunchType;
+import com.crab.daystreakdemo.model.User;
 import com.crab.daystreakdemo.repository.PunchRecordRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PunchRecordService {
@@ -15,12 +17,21 @@ public class PunchRecordService {
         this.repository = repository;
     }
 
-    public PunchRecord checkIn() {
-        PunchRecord lastRecord = repository.findTopByOrderByPunchTimeDesc();
-        if (lastRecord != null && lastRecord.getType() != PunchType.CHECK_OUT) {
-            throw new IllegalStateException("Cannot check in again before you check out");
+    public PunchRecord checkIn(Long uid) {
+        Optional<PunchRecord> lastRecordOptional = repository.findTopByUser_UidOrderByPunchTimeDesc(uid);
+        if (lastRecordOptional.isPresent()) {
+            PunchRecord lastRecord = lastRecordOptional.get();
+            if (lastRecord.getType() != PunchType.CHECK_OUT) {
+                throw new IllegalStateException("Cannot check in again before you check out");
+            }
         }
-        return repository.save(new PunchRecord(LocalDateTime.now(), PunchType.CHECK_IN));
+        PunchRecord newRecord = new PunchRecord(LocalDateTime.now(), PunchType.CHECK_IN);
+        // 设置用户
+        User user = new User();
+        user.setId(uid);
+        newRecord.setUser(user);
+
+        return repository.save(newRecord);
     }
 
     public PunchRecord checkOut() {

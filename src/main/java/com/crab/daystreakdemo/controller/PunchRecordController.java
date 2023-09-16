@@ -1,13 +1,11 @@
 package com.crab.daystreakdemo.controller;
 
 
+import com.crab.daystreakdemo.dto.CheckInRequest;
 import com.crab.daystreakdemo.model.PunchRecord;
 import com.crab.daystreakdemo.service.PunchRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,9 +18,13 @@ public class PunchRecordController {
     }
 
     @PostMapping("/in")
-    public PunchRecord checkIn() {
-        return service.checkIn();
+    public PunchRecord checkIn(@RequestBody CheckInRequest request) {
+        if (request == null || request.getUid() == null) {
+            throw new IllegalArgumentException("uid is required");
+        }
+        return service.checkIn(request.getUid());
     }
+
 
     @PostMapping("/out")
     public PunchRecord checkOut() {
