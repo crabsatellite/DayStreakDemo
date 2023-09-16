@@ -14,5 +14,14 @@ public class PunchRecord {
     private Long id;
     private LocalDateTime punchTime;
     private PunchType punchType;
+
+    public PunchRecord(LocalDateTime punchTime, PunchType punchType) {
+        this.punchTime = punchTime;
+        this.punchType = punchType;
+    }
+
+    public PunchRecord() {
+
+    }
 }
 
