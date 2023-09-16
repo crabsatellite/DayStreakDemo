@@ -23,5 +23,9 @@ public class PunchRecord {
     public PunchRecord() {
 
     }
+
+    public PunchType getType() {
+        return punchType;
+    }
 }
 
