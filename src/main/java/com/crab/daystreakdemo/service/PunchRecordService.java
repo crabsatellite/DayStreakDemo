@@ -26,7 +26,6 @@ public class PunchRecordService {
             }
         }
         PunchRecord newRecord = new PunchRecord(LocalDateTime.now(), PunchType.CHECK_IN);
-        // 设置用户
         User user = new User();
         user.setId(uid);
         newRecord.setUser(user);
@@ -34,7 +33,7 @@ public class PunchRecordService {
         return repository.save(newRecord);
     }
 
-    public PunchRecord checkOut() {
+    public PunchRecord checkOut(Long uid) {
         PunchRecord lastRecord = repository.findTopByOrderByPunchTimeDesc();
         if (lastRecord == null) {
             throw new IllegalStateException("You need to check in first");
@@ -45,15 +44,30 @@ public class PunchRecordService {
         if (lastRecord.getType() == PunchType.CHECK_OUT) {
             throw new IllegalStateException("Cannot check out again");
         }
-        return repository.save(new PunchRecord(LocalDateTime.now(), PunchType.CHECK_OUT));
+        PunchRecord newRecord = new PunchRecord(LocalDateTime.now(), PunchType.CHECK_OUT);
+        User user = new User();
+        user.setId(uid);
+        newRecord.setUser(user);
+
+        return repository.save(newRecord);
     }
 
-    public PunchRecord breakStart() {
-        return repository.save(new PunchRecord(LocalDateTime.now(), PunchType.BREAK_START));
+    public PunchRecord breakStart(Long uid) {
+        PunchRecord newRecord = new PunchRecord(LocalDateTime.now(), PunchType.BREAK_START);
+        User user = new User();
+        user.setId(uid);
+        newRecord.setUser(user);
+
+        return repository.save(newRecord);
     }
 
-    public PunchRecord breakEnd() {
-        return repository.save(new PunchRecord(LocalDateTime.now(), PunchType.BREAK_END));
+    public PunchRecord breakEnd(Long uid) {
+        PunchRecord newRecord = new PunchRecord(LocalDateTime.now(), PunchType.BREAK_END);
+        User user = new User();
+        user.setId(uid);
+        newRecord.setUser(user);
+
+        return repository.save(newRecord);
     }
 
     public List<PunchRecord> getAll() {
