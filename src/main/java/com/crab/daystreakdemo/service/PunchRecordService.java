@@ -24,6 +24,16 @@ public class PunchRecordService {
     }
 
     public PunchRecord checkOut() {
+        PunchRecord lastRecord = repository.findTopByOrderByPunchTimeDesc();
+        if (lastRecord == null) {
+            throw new IllegalStateException("You need to check in first");
+        }
+        if (lastRecord.getType() == PunchType.BREAK_START) {
+            throw new IllegalStateException("Cannot check out before break end");
+        }
+        if (lastRecord.getType() == PunchType.CHECK_OUT) {
+            throw new IllegalStateException("Cannot check out again");
+        }
         return repository.save(new PunchRecord(LocalDateTime.now(), PunchType.CHECK_OUT));
     }
 
