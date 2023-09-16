@@ -1,9 +1,6 @@
 package com.crab.daystreakdemo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +11,10 @@ public class PunchRecord {
     private Long id;
     private LocalDateTime punchTime;
     private PunchType punchType;
+
+    @ManyToOne
+    @JoinColumn(name = "uid")
+    private User user;
 
     public PunchRecord(LocalDateTime punchTime, PunchType punchType) {
         this.punchTime = punchTime;

@@ -1,18 +1,20 @@
 package com.crab.daystreakdemo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long uid;
     private String name;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private Set<PunchRecord> punchRecords;
 
     public User() {
 
@@ -25,11 +27,11 @@ public class User {
     }
 
     public Long getId() {
-        return id;
+        return uid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long uid) {
+        this.uid = uid;
     }
 
 
@@ -59,4 +61,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }
