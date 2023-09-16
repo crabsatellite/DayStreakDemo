@@ -43,4 +43,6 @@ public class PunchRecordController {
     public List<PunchRecord> getAll() {
         return repository.findAll();
     }
+
+
 }
